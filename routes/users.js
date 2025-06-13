@@ -12,15 +12,7 @@ const uid2 = require("uid2");
 router.post("/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
-    if (
-      !checkBody(req.body, [
-        "firstName",
-        "lastName",
-        "email",
-        "password",
-        "confirmPassword",
-      ])
-    ) {
+    if (!checkBody(firstName, lastName, email, password, confirmPassword)) {
       return res
         .status(400) // 400 = Bad Request
         .json({ result: false, error: "Missing or empty fields" });
@@ -35,8 +27,8 @@ router.post("/signup", async (req, res) => {
     });
     if (existingUser) {
       return res
-        .status(409)
-        .json({ result: false, error: "Email already used" }); // 409 = Conflict
+        .status(409) // 409 = Conflict
+        .json({ result: false, error: "Email already used" });
     }
     const hash = bcrypt.hashSync(password, 10);
     const token = uid2(32);
