@@ -10,7 +10,14 @@ var usersRouter = require("./routes/users");
 
 var app = express();
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+// app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
