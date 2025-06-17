@@ -78,7 +78,6 @@ router.post("/signup", async (req, res) => {
 // -------------------
 
 router.post("/signin", async (req, res) => {
-  // const { email, password } = req.body;
   User.findOne({ email: req.body.email }).then((data) => {
     if (data && bcrypt.compareSync(req.body.password, data.password)) {
       res.status(200).json({ result: true, message: "Sign in success" });
