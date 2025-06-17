@@ -42,7 +42,7 @@ router.post("/signup", async (req, res) => {
         .json({ result: false, error: "Email already used" });
     }
     const token = uid2(32);
-    const hash = bcrypt.hashSync("password", 10);
+    const hash = bcrypt.hashSync(password, 10);
 
     const newUser = new User({
       firstName,
@@ -71,6 +71,21 @@ router.post("/signup", async (req, res) => {
       .status(500)
       .json({ result: false, error: "internal server error : ", error });
   }
+});
+
+// -------------------
+// ROUTE POST : SIGNIN
+// -------------------
+
+router.post("/signin", async (req, res) => {
+  // const { email, password } = req.body;
+  User.findOne({ email: req.body.email }).then((data) => {
+    if (data && bcrypt.compareSync(req.body.password, data.password)) {
+      res.status(200).json({ result: true, message: "Sign in success" });
+    } else {
+      res.status(404).json({ result: false, error: "Wrong email or password" });
+    }
+  });
 });
 
 module.exports = router;
