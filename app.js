@@ -18,7 +18,7 @@ app.use(
   })
 );
 // app.options("*", cors());
-app.use(cors());
+// app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
