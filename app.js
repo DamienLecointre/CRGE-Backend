@@ -10,14 +10,13 @@ var usersRouter = require("./routes/users");
 
 var app = express();
 const cors = require("cors");
-// app.use(
-//   cors({
-//     origin:
-//       "https://crge-frontend-ai6u6zdnp-damien-lecointres-projects.vercel.app",
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: "https://crge-frontend.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 // app.options("*", cors());
 app.use(cors());
 
