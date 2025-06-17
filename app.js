@@ -17,6 +17,7 @@ app.use(
     credentials: true,
   })
 );
+app.options("*", cors());
 // app.use(cors());
 
 app.use(logger("dev"));
