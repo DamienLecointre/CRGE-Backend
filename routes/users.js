@@ -1,37 +1,48 @@
 var express = require("express");
 var router = express.Router();
-const User = require("../models/users");
 const { checkBody } = require("../modules/checkBody");
 const bcrypt = require("bcrypt");
 const uid2 = require("uid2");
+const User = require("../models/users");
 
 // -------------------
 // ROUTE POST : SIGNUP
 // -------------------
-
 router.post("/signup", async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   try {
-    const { firstName, lastName, email, password, confirmPassword } = req.body;
-    if (!checkBody(firstName, lastName, email, password, confirmPassword)) {
+    if (!checkBody(req.body, ["firstName", "lastName", "email", "password"])) {
       return res
-        .status(400) // 400 = Bad Request
-        .json({ result: false, error: "Missing or empty fields" });
+        .status(404)
+        .json({ result: false, error: "Empty or missing field" });
     }
-    if (password !== confirmPassword) {
+    if (!emailRegex.test(email)) {
       return res
-        .status(400) // 400 = Bad Request
-        .json({ result: false, error: "Passwords do not match" });
+        .status(409)
+        .json({ result: false, error: "Wrong email format" });
     }
-    const existingUser = await User.findOne({
+    if (!passwordRegex.test(password)) {
+      return res.status(409).json({
+        result: false,
+        error:
+          "Password have to include a minimum of 8 characters, an uppercase letter, a lowercase letter, a number and a special character.",
+      });
+    }
+    const isExistingUser = await User.findOne({
       email: { $regex: new RegExp(email, "i") },
     });
-    if (existingUser) {
+    if (isExistingUser) {
       return res
-        .status(409) // 409 = Conflict
+        .status(404)
         .json({ result: false, error: "Email already used" });
     }
-    const hash = bcrypt.hashSync(password, 10);
     const token = uid2(32);
+    const hash = bcrypt.hashSync("password", 10);
 
     const newUser = new User({
       firstName,
@@ -43,27 +54,22 @@ router.post("/signup", async (req, res) => {
     });
 
     const savedUser = await newUser.save();
+    res.status(201).json({
+      result: true,
+      message: "User create with success : ",
+      user: {
+        firstName: savedUser.firstName,
+        lastName: savedUser.lastName,
+        email: savedUser.email,
+        password: savedUser.password,
+        token: savedUser.token,
+        inscriptionDate: savedUser.inscriptionDate,
+      },
+    });
+  } catch {
     res
-      .status(201) // 201 = Created
-      .json({
-        result: true,
-        message: "User created successfully",
-        user: {
-          firstName: savedUser.firstName,
-          lastName: savedUser.lastName,
-          email: savedUser.email,
-          token: savedUser.token,
-          inscriptionDate: savedUser.inscriptionDate,
-        },
-      });
-  } catch (error) {
-    if (error.name === "ValidationError") {
-      const messages = Object.values(error.errors).map((e) => e.message);
-      return res
-        .status(400)
-        .json({ result: false, error: messages.join(", ") });
-    }
-    res.status(500).json({ result: false, error: "Error saving user" }); // 500 = Server error
+      .status(500)
+      .json({ result: false, error: "internal server error : ", error });
   }
 });
 
