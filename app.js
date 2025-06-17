@@ -14,11 +14,8 @@ app.use(
   cors({
     origin: "https://crge-frontend.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
   })
 );
-// app.options("*", cors());
-// app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
