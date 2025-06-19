@@ -80,7 +80,18 @@ router.post("/signup", async (req, res) => {
 router.post("/signin", async (req, res) => {
   User.findOne({ email: req.body.email }).then((data) => {
     if (data && bcrypt.compareSync(req.body.password, data.password)) {
-      res.status(200).json({ result: true, message: "Sign in success" });
+      res.status(200).json({
+        result: true,
+        message: "Sign in success",
+        user: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+          token: data.token,
+          inscriptionDate: data.inscriptionDate,
+        },
+      });
     } else {
       res.status(404).json({ result: false, error: "Wrong email or password" });
     }
