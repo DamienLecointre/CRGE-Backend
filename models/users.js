@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema({
   password: String,
   token: String,
   inscriptionDate: Date,
+  admin: { type: Boolean, default: false },
 });
 
 const User = mongoose.model("users", userSchema);

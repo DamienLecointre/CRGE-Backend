@@ -51,6 +51,7 @@ router.post("/signup", async (req, res) => {
       password: hash,
       token,
       inscriptionDate: new Date(),
+      admin: false,
     });
 
     const savedUser = await newUser.save();
@@ -64,6 +65,7 @@ router.post("/signup", async (req, res) => {
         password: savedUser.password,
         token: savedUser.token,
         inscriptionDate: savedUser.inscriptionDate,
+        admin: savedUser.admin,
       },
     });
   } catch {
@@ -90,6 +92,7 @@ router.post("/signin", async (req, res) => {
           password: data.password,
           token: data.token,
           inscriptionDate: data.inscriptionDate,
+          admin: data.admin,
         },
       });
     } else {
