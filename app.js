@@ -11,7 +11,14 @@ var herosRouter = require("./routes/heros");
 
 var app = express();
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3001", "https://crge-frontend.vercel.app/"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+// app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
