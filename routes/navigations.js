@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
     const nav = await Nav.find();
     res
       .status(201)
-      .json({ result: true, message: "Files found", navData: nav });
+      .json({ result: true, message: "Navigation files found", navData: nav });
   } catch (error) {
     res.status(500).json({ result: false, error: "Files not found" });
   }
