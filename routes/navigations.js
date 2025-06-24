@@ -9,6 +9,7 @@ router.get("/", async (req, res) => {
       .status(201)
       .json({ result: true, message: "Navigation files found", navData: nav });
   } catch (error) {
+    console.error("Erreur dans GET /navigations :", error); // <--- Ajoute ça
     res.status(500).json({ result: false, error: "Files not found" });
   }
 });
