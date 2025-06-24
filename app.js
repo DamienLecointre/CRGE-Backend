@@ -9,6 +9,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var herosRouter = require("./routes/heros");
 var navigationsRouter = require("./routes/navigations");
+var serviceCardsRouter = require("./routes/serviceCards");
 
 var app = express();
 const cors = require("cors");
@@ -31,5 +32,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/heros", herosRouter);
 app.use("/navigations", navigationsRouter);
+app.use("/serviceCards", serviceCardsRouter);
 
 module.exports = app;
