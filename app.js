@@ -1,6 +1,7 @@
 require("dotenv").config();
 require("./models/connection");
 var express = require("express");
+const connectDB = require("./models/connection");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
@@ -14,6 +15,7 @@ var actualitesRouter = require("./routes/actualites");
 var homepageDataRouter = require("./routes/homepageData");
 
 var app = express();
+connectDB();
 const cors = require("cors");
 app.use(
   cors({
