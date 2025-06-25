@@ -11,6 +11,7 @@ var herosRouter = require("./routes/heros");
 var navigationsRouter = require("./routes/navigations");
 var serviceCardsRouter = require("./routes/serviceCards");
 var actualitesRouter = require("./routes/actualites");
+var homepageDataRouter = require("./routes/homepageData");
 
 var app = express();
 const cors = require("cors");
@@ -35,5 +36,6 @@ app.use("/heros", herosRouter);
 app.use("/navigations", navigationsRouter);
 app.use("/serviceCards", serviceCardsRouter);
 app.use("/actualites", actualitesRouter);
+app.use("/homepage-data", homepageDataRouter);
 
 module.exports = app;
