@@ -7,8 +7,12 @@ router.get("/", async (req, res) => {
   try {
     const hero = await Hero.find();
     res
-      .status(201)
-      .json({ result: true, message: "Hero data recover", heroData: hero });
+      .status(200)
+      .json({
+        result: true,
+        message: "Hero data content added",
+        heroData: hero,
+      });
   } catch (error) {
     res.status(500).json({ result: false, error: "Erreur serveur" });
   }

@@ -15,12 +15,9 @@ router.get("/", async (req, res) => {
       Actualites.find(),
     ]);
 
-    res.status(200).json({
-      navData,
-      heroData,
-      serviceCards,
-      actualites,
-    });
+    res
+      .status(200)
+      .json({ result: true, navData, heroData, serviceCards, actualites });
   } catch (error) {
     console.error("Erreur /homepage-data:", error);
     res.status(500).json({ error: "Erreur serveur" });
