@@ -13,6 +13,7 @@ var navigationsRouter = require("./routes/navigations");
 var serviceCardsRouter = require("./routes/serviceCards");
 var actualitesRouter = require("./routes/actualites");
 var homepageDataRouter = require("./routes/homepageData");
+var contactFormRouter = require("./routes/contactForm");
 
 var app = express();
 connectDB();
@@ -39,5 +40,6 @@ app.use("/navigations", navigationsRouter);
 app.use("/serviceCards", serviceCardsRouter);
 app.use("/actualites", actualitesRouter);
 app.use("/homepage-data", homepageDataRouter);
+app.use("/contactForm", contactFormRouter);
 
 module.exports = app;
