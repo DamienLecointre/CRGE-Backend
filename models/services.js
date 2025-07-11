@@ -8,6 +8,7 @@ const memberSchema = new mongoose.Schema({
 
 const offerItemSchema = new mongoose.Schema({
   title: String,
+  subtitle: String,
   details: [String],
   resource: {
     label: String,
@@ -36,6 +37,12 @@ const offerStageSchema = new mongoose.Schema({
   subtopics: mongoose.Schema.Types.Mixed, // Peut contenir objets ou tableaux
 });
 
+const pricingItemSchema = new mongoose.Schema({
+  title: String,
+  price: String,
+  unit: String,
+});
+
 const toolItemSchema = new mongoose.Schema({
   picture: String,
   content: [String],
@@ -43,7 +50,6 @@ const toolItemSchema = new mongoose.Schema({
 
 const sectionSchema = new mongoose.Schema({
   type: { type: String, required: true },
-
   // Types différents de contenus possibles
   content: mongoose.Schema.Types.Mixed, // pour intro, access, complaints, etc.
   members: [memberSchema], // pour team
@@ -54,6 +60,7 @@ const sectionSchema = new mongoose.Schema({
   certification: [String], // pour commitments
   stages: [offerStageSchema], // pour offer_stages
   item: resourceItemSchema, // pour resource (objet unique)
+  pricing: [pricingItemSchema], // pour pricing
 });
 
 const serviceSchema = new mongoose.Schema(
