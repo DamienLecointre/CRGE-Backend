@@ -28,6 +28,7 @@ const eventSchema = new mongoose.Schema({
   category: { type: String, required: true },
   title: { type: String, required: true },
   lieu: { type: String, required: true },
+  topic: { type: String, required: true },
   speaker: speakerSchema, // requis dans tous les cas selon ta BDD actuelle
   audience: audienceSchema, // facultatif
   objectives: [String], // facultatif
